@@ -6,11 +6,12 @@ int main(void){
 		int i, j, k;
 		struct timespec start, stop; 
 		double time;
-		int n = 1000; // matrix size is n*n
+		int n = 4096; // matrix size is n*n (Default is 4096)
 		
 		double **A = (double**) malloc (sizeof(double*)*n);
 		double **B = (double**) malloc (sizeof(double*)*n);
 		double **C = (double**) malloc (sizeof(double*)*n);
+		
 		for (i=0; i<n; i++) {
 			A[i] = (double*) malloc(sizeof(double)*n);
 			B[i] = (double*) malloc(sizeof(double)*n);

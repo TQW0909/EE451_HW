@@ -8,28 +8,26 @@ int main(int argc, char *argv[]){
             printf("Missing block size!!!!");
             return 0;
         }
-        int b = argv[1];
-        if (b % 4 != 0)
-        {
-            printf("Block size needs to be mutiple of 4!!!");
+       	int b = atoi(argv[1]);
+		if (b == 0) {
+            printf("Need int block size!!!!");
             return 0;
         }
-		int i, j, k;
+
+		int i, j, k, x, y, z;
 		struct timespec start, stop; 
 		double time;
-		int n = 4096; // matrix size is n*n
+		int n = 4096; // matrix size is n*n (Default n = 4096)
+		int m = n / b;
 		
-		double **A = (double**) malloc (sizeof(double*)*n/b);
-		double **B = (double**) malloc (sizeof(double*)*n/b);
-		double **C = (double**) malloc (sizeof(double*)*n/b);
-
-		for (i=0; i<n/b; i++) {
-			A[i] = (double*) malloc(sizeof(double)*n/b);
-			B[i] = (double*) malloc(sizeof(double)*n/b);
-			C[i] = (double*) malloc(sizeof(double)*n/b);
+		double **A = (double**) malloc (sizeof(double*)*n);
+		double **B = (double**) malloc (sizeof(double*)*n);
+		double **C = (double**) malloc (sizeof(double*)*n);
+		for (i=0; i<n; i++) {
+			A[i] = (double*) malloc(sizeof(double)*n);
+			B[i] = (double*) malloc(sizeof(double)*n);
+			C[i] = (double*) malloc(sizeof(double)*n);
 		}
-
-        // Below has not been modified
 		
 		for (i=0; i<n; i++){
 			for(j=0; j< n; j++){
@@ -44,7 +42,25 @@ int main(int argc, char *argv[]){
 		// Your code goes here //
 		// Matrix C = Matrix A * Matrix B //	
 		//*******************************//
-		
+		for (i = 0; i < n; i += b)
+        {
+			for (j = 0; j < n; j += b)
+			{
+				for (k = 0; k < n; k += b)
+				{
+					for (x = 0; x < b; x++ )
+					{
+						for (y = 0; y < b; y++ )
+						{
+							for (z = 0; z < b; z++)
+							{
+								C[x + i][y + j] += A[x + i][z + k] * B[z + k][y + j];
+							}
+						}
+					}
+				}
+			}
+		}
 		
 		//*******************************//
 		

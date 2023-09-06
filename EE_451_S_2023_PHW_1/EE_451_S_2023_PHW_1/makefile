@@ -1,15 +1,15 @@
 CC = gcc
 
-all: p1 p2
+all: p1a p1b p2
 
 p1a : p1a.c
 	$(CC) p1a.c -o p1a
 
-# p1: problem1.c
-# 	$(CC) problem1.c -o p1
+p1b : p1b.c
+	$(CC) p1b.c -o p1b
 
-# p2: problem2.c
-# 	$(CC) problem2.c -o p2
+p2: problem2.c
+	$(CC) problem2.c -o p2
 
 clean:
-	rm p1 p2
+	rm p1a p1b p2
