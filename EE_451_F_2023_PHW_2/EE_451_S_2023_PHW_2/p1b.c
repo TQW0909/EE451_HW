@@ -8,6 +8,7 @@
 
 double **A, **B, **C;
 pthread_mutex_t *mutexes;
+int p;
 
 struct  thread_data{
    int	thread_id;
@@ -31,9 +32,9 @@ void *compute(void *data){
 		{
 			for (int k = 0; k < n; k++) 
 			{
-                pthread_mutex_lock(&mutexes[i]);
+                pthread_mutex_lock(&mutexes[i / (n/p)]);
 				C[i][k] += A[i][j] * B[j][k];
-                pthread_mutex_unlock(&mutexes[i]);
+                pthread_mutex_unlock(&mutexes[i / (n/p)]);
 			}
 		}
 	}
@@ -50,7 +51,7 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 
-	int p = atoi(argv[1]);
+	p = atoi(argv[1]);
 	int num_threads = p * p;
 
 	pthread_t threads[num_threads];
@@ -124,6 +125,8 @@ int main(int argc, char *argv[]){
     {
         pthread_mutex_destroy(&mutexes[i]);
     }
+
+    free(mutexes);
 
 	// release memory
 	for (i=0; i<n; i++) {
