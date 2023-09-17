@@ -106,8 +106,6 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	// pthread_exit(NULL);
-
 	for (i = 0; i < num_threads; i++)
 	{
 		pthread_join(threads[i], NULL);
